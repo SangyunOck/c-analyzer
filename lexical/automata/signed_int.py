@@ -1,62 +1,21 @@
 from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
 
+#TODO extends DFA in order to get digis, non-zero digis, alphabets
+non_zero_digits = [str(i) for i in range(1, 10)]
+digits = non_zero_digits + [0]
 
 class SignedInteger(DFA):
-    states = {
-        "t0": {
-            "0": "t1",
-            "-": "t2",
-            "1": "t3",
-            "2": "t3",
-            "3": "t3",
-            "4": "t3",
-            "5": "t3",
-            "6": "t3",
-            "7": "t3",
-            "8": "t3",
-            "9": "t3",
-        },
-        "t2": {
-            "1": "t3",
-            "2": "t3",
-            "3": "t3",
-            "4": "t3",
-            "5": "t3",
-            "6": "t3",
-            "7": "t3",
-            "8": "t3",
-            "9": "t3",
-        },
-        "t3": {
-            "0": "t4",
-            "1": "t4",
-            "2": "t4",
-            "3": "t4",
-            "4": "t4",
-            "5": "t4",
-            "6": "t4",
-            "7": "t4",
-            "8": "t4",
-            "9": "t4",
-        },
-        "t4": {
-            "0": "t4",
-            "1": "t4",
-            "2": "t4",
-            "3": "t4",
-            "4": "t4",
-            "5": "t4",
-            "6": "t4",
-            "7": "t4",
-            "8": "t4",
-            "9": "t4",
-        },
-    }
+    states = {}
+    states['t0'] = {i: "t3" for i in non_zero_digits}
+    states['t0']['0'] = "t1"
+    states['t0']['-'] = "t2"
 
+    states['t2'] = {i: "t3" for i in non_zero_digits}
+    states['t3'] = {i: "t3" for i in digits}
+    
     def accept(self, i, line_num):
         try:
-            self.state = self.states[self.state][i]
-            self.value += i
+            super().accept(i)
             if self.state != "t4":
                 return True, None
         except KeyError:
@@ -68,7 +27,7 @@ class SignedInteger(DFA):
                 )
             if self.state == "t2":
                 raise LexicalError("Only numerical value available after " - "")
-            if self.state in ["t3", "t4"]:
+            if self.state == "t3":
                 if i in WHITESPACE + OPERATOR + PROGRAM_KEYWORD:
                     returnVal = self.value
                     self.reset()
