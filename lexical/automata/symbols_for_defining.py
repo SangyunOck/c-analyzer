@@ -1,12 +1,12 @@
 from lexical.dfa import DFA
 
 
-class SymbolsForDenifing(DFA):
+class SymbolsForDefining(DFA):
     stats = {"t0": {"{", "t1", "}", "t1"}}
 
     def accept(self, i) -> None:
         try:
             super().accept(i)
-            return True, self.value
+            return True, "SYMBOLSFORDEFINING", self.value
         except KeyError:
-            return False, None
+            return False, None, None

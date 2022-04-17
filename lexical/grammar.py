@@ -7,7 +7,7 @@ from automata.keyword import Keyword
 from automata.literal_string import LiteralString
 from automata.semicolon import Semicolon
 from automata.signed_int import SignedInteger
-from automata.symbols_for_defining import SymbolsForDenifing
+from automata.symbols_for_defining import SymbolsForDefining
 from automata.symbols_for_indicating import SymbolsForIndicating
 from automata.variable import VariableType
 
@@ -19,11 +19,11 @@ class Grammar:
         self.comma = Comma()
         self.comparison = Comparision()
         self.identifier = Identifier()
-        self.if_keyword = Keyword()
+        self.keyword = Keyword()
         self.literal_string = LiteralString()
         self.semicolon = Semicolon()
         self.signed_integer = SignedInteger()
-        self.symbols_for_defining = SymbolsForDenifing()
+        self.symbols_for_defining = SymbolsForDefining()
         self.symbols_for_indicating = SymbolsForIndicating()
         self.variable_type = VariableType()
 
@@ -45,23 +45,48 @@ class Grammar:
             return comparison_type, comparison_value
 
 
-        is_identifier_accepted, identifier_value = self.identifier.accept(i, line_num)
-        is_if_keyword_accepted, if_keyword_value = self.if_keyword.accept(i, line_num)
-        is_literal_string_accepted, literal_string_value = self.literal_string.accept(
+        is_identifier_accepted, identifier_type, identifier_value = self.identifier.accept(i, line_num)
+        if is_identifier_accepted and identifier_value:
+            return identifier_type, identifier_value
+
+        is_keyword_accepted, keyword_type, keyword_value = self.keyword.accept(i, line_num)
+        if is_keyword_accepted and keyword_value:
+            return keyword_type, keyword_value
+
+        is_literal_string_accepted, literal_string_type, literal_string_value = self.literal_string.accept(
             i, line_num
         )
-        is_semicolon_accepted, semicolon_value = self.semicolon.accept(i, line_num)
-        is_signed_integer_accepted, signed_integer_value = self.signed_integer.accept(
+        if is_literal_string_accepted and literal_string_value:
+            return literal_string_type, literal_string_value
+        
+        is_semicolon_accepted, semicolon_type, semicolon_value = self.semicolon.accept(i, line_num)
+        if is_semicolon_accepted and semicolon_value:
+            return semicolon_type, semicolon_value
+
+        is_signed_integer_accepted, signed_integer_type, signed_integer_value = self.signed_integer.accept(
             i, line_num
         )
+        if is_signed_integer_accepted and signed_integer_value:
+            return signed_integer_type, signed_integer_value
+
         (
             is_symbols_for_defining_accepted,
+            symbols_for_defining_type,
             symbols_for_defining_value,
         ) = self.symbols_for_defining.accept(i, line_num)
+        if is_symbols_for_defining_accepted and symbols_for_defining_value:
+            return symbols_for_defining_type, symbols_for_defining_value
+
         (
             is_symbols_for_indicating_accepted,
+            symbols_for_indicating_type,
             symbols_for_indicating_value,
         ) = self.symbols_for_indicating.accept(i, line_num)
-        is_variable_type_accepted, variable_type_value = self.variable_type.accept(
+        if is_symbols_for_indicating_accepted and symbols_for_indicating_value:
+            return symbols_for_indicating_type, symbols_for_indicating_value
+
+        is_variable_type_accepted, variable_type_type, variable_type_value = self.variable_type.accept(
             i, line_num
         )
+        if is_variable_type_accepted and variable_type_value:
+            return variable_type_type, variable_type_value

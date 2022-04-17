@@ -7,6 +7,6 @@ class Semicolon(DFA):
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            return True, self.value
+            return True, "SEMICOLON", self.value
         except KeyError:
-            return False, None
+            return False, None, None

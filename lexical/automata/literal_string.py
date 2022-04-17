@@ -78,7 +78,7 @@ class LiteralString(DFA):
         try:
             super().accept(i)
             if self.state == "t5":
-                return True, self.value
+                return True, "LITERALSTRING", self.value
         except KeyError:
             if self.state != "t5":
                 raise LexicalError('Needed ", line', line_num)

@@ -7,7 +7,7 @@ class SymbolsForIndicating(DFA):
     def accept(self, i) -> None:
         try:
             super().accept(i)
-            return True, self.value
+            return True, "SYMBOLSFORINDICATING", self.value
 
         except KeyError:
-            return False, None
+            return False, None, None

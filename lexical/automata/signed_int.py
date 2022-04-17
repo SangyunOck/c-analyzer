@@ -18,10 +18,10 @@ class SignedInteger(DFA):
         try:
             super().accept(i)
             if self.state != "t4":
-                return True, None
+                return True, None, None
         except KeyError:
             if self.state == "t0":
-                return False, None
+                return False, None, None
             if self.state == "t1":
                 raise LexicalError(
                     "Variable cannot start with numerical value", line_num
@@ -32,10 +32,10 @@ class SignedInteger(DFA):
                 if i in WHITESPACE + OPERATOR + PROGRAM_KEYWORD:
                     returnVal = self.value
                     self.reset()
-                    return True, int(returnVal)
+                    return True, "SIGNEDINTEGER", int(returnVal)
                 else:
                     raise LexicalError(
                         "Only numerical value available after number", line_num
                     )
 
-        return False, None
+        return False, None, None
