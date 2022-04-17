@@ -17,7 +17,7 @@ class Identifier(DFA):
     def accept(self, i) -> None:
         try:
             super().accept(i)
-            return False, None
+            return False, None, None
         except KeyError:
             if self.state in ["t1", "t2", "t3"]:
-                return True, self.value
+                return True, "IDENTIFIER", self.value
