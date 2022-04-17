@@ -11,7 +11,6 @@ from automata.symbols_for_defining import SymbolsForDefining
 from automata.symbols_for_indicating import SymbolsForIndicating
 from automata.variable import VariableType
 
-
 class Grammar:
     def __init__(self) -> None:
         self.arithmatic = Arithmatic()

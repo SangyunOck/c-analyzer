@@ -14,9 +14,9 @@ class LexicalAnalyzer:
         for token, line_num in self.line_buffer.read_next():
             if token not in WHITESPACE:
                 try:
-                    lexeme = grammar.check_lexeme(token, line_num)
-                    if lexeme:
-                        print(lexeme)
+                    token_type, token_value = grammar.check_lexeme(token, line_num)
+                    if token_type:
+                        print(token_type, token_value)
                 except LexicalError as e:
                     print(e)
                     self.output_file.write(e.msg)
