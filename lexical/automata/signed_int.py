@@ -1,26 +1,27 @@
 from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
 
-#TODO extends DFA in order to get digis, non-zero digis, alphabets
+# TODO extends DFA in order to get digis, non-zero digis, alphabets
 non_zero_digits = [str(i) for i in range(1, 10)]
 digits = non_zero_digits + [0]
 
+
 class SignedInteger(DFA):
     states = {}
-    states['t0'] = {i: "t3" for i in non_zero_digits}
-    states['t0']['0'] = "t1"
-    states['t0']['-'] = "t2"
+    states["t0"] = {i: "t3" for i in non_zero_digits}
+    states["t0"]["0"] = "t1"
+    states["t0"]["-"] = "t2"
 
-    states['t2'] = {i: "t3" for i in non_zero_digits}
-    states['t3'] = {i: "t3" for i in digits}
-    
+    states["t2"] = {i: "t3" for i in non_zero_digits}
+    states["t3"] = {i: "t3" for i in digits}
+
     def accept(self, i, line_num):
         try:
             super().accept(i)
             if self.state != "t4":
-                return True, None
+                return True, None, None
         except KeyError:
             if self.state == "t0":
-                return False, None
+                return False, None, None
             if self.state == "t1":
                 raise LexicalError(
                     "Variable cannot start with numerical value", line_num
@@ -31,10 +32,10 @@ class SignedInteger(DFA):
                 if i in WHITESPACE + OPERATOR + PROGRAM_KEYWORD:
                     returnVal = self.value
                     self.reset()
-                    return True, int(returnVal)
+                    return True, "SIGNEDINTEGER", int(returnVal)
                 else:
                     raise LexicalError(
                         "Only numerical value available after number", line_num
                     )
 
-        return False, None
+        return False, None, None

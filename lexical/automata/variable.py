@@ -16,8 +16,8 @@ class VariableType(DFA):
             if self.state == "t5":
                 returnVal = self.value
                 self.reset()
-                return True, returnVal
+                return True, "VARIABLETYPE", returnVal
             else:
-                return True, None
+                return True, None, None
         except KeyError:
-            return False, None
+            return False, None, None

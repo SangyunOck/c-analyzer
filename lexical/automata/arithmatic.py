@@ -1,17 +1,15 @@
 from lexical.dfa import DFA
 
-class Arithmatic(DFA):
-    states = {
-        "t0" : {"+": "t1"},
-        "t0": {"-": "t2"},
-        "t0": {"*": "t3"},
-        "t0": {"/": "t4"},
-    }
 
-    def accept(self, i):
+class Arithmatic(DFA):
+    states = {"t0": {"+": "t1", "-": "t2", "*": "t3", "/": "t4"}}
+
+    def accept(self, i, line_num):
         try:
             super().accept(i)
-            return True, self.value
+            self.returnVal = self.value
+            self.reset()
+            return True, "ARITHMATIC", self.returnVal
         except KeyError:
-            return False, None
-        
+            self.reset()
+            return False, None, None

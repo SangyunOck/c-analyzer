@@ -1,12 +1,15 @@
 from lexical.dfa import DFA
 
+
 class Assignment(DFA):
-    states = {
-        "t0": {}
-    }
-    def accept(self, i):
+    states = {"t0": {"=": "t1"}}
+
+    def accept(self, i, line_num):
         try:
             super().accept(i)
-            return True, self.value
+            returnVal = self.value
+            self.reset()
+            return True, "ASSIGNMENT", returnVal
         except KeyError:
-            return None, None
+            self.reset()
+            return None, None, None
