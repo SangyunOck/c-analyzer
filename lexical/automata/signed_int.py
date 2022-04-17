@@ -1,5 +1,6 @@
 from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
 
+#TODO extends DFA in order to get digis, non-zero digis, alphabets
 non_zero_digits = [str(i) for i in range(1, 10)]
 digits = non_zero_digits + [0]
 

@@ -1,13 +1,8 @@
 from lexical.dfa import DFA
 
-class Comparision(DFA):
+class Semicolon(DFA):
     states = {
-        "t0": {"<": "t1"},
-        "t0": {">": "t2"},
-        "t0": {"==", "t3"},
-        "t0": {"!=", "t4"},
-        "t0": {"<=", "t5"},
-        "t0": {">=", "t6"}
+        "t0": {";": "t1"}
     }
     def accept(self, i, line_num) -> None:
         try:
@@ -15,4 +10,4 @@ class Comparision(DFA):
             return True, self.value
         except KeyError:
             return False, None
-        
+    
