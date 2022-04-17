@@ -1,17 +1,12 @@
 from lexical.dfa import DFA
 
-class Arithmatic(DFA):
+class Assignment(DFA):
     states = {
-        "t0" : {"+": "t1"},
-        "t0": {"-": "t2"},
-        "t0": {"*": "t3"},
-        "t0": {"/": "t4"},
+        "t0": {}
     }
-
     def accept(self, i):
         try:
             super().accept(i)
             return True, self.value
         except KeyError:
-            return False, None
-        
+            return None, None
