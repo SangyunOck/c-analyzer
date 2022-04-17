@@ -1,5 +1,6 @@
 from lexical.dfa import DFA
 
+
 class Comparision(DFA):
     states = {
         "t0": {"<": "t1"},
@@ -7,12 +8,12 @@ class Comparision(DFA):
         "t0": {"==", "t3"},
         "t0": {"!=", "t4"},
         "t0": {"<=", "t5"},
-        "t0": {">=", "t6"}
+        "t0": {">=", "t6"},
     }
+
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            return True, self.value
+            return True, "COMPARISION", self.value
         except KeyError:
-            return False, None
-        
+            return False, None, None
