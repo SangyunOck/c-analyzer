@@ -8,10 +8,9 @@ class LexicalAnalyzer:
         self.line_buffer = LineBuffer(filename)
         self.output_file = open("test.out", "a")
 
-    
     def scan_lexemes(self):
         grammar = Grammar()
-        
+
         for token, line_num in self.line_buffer.read_next():
             if token not in WHITESPACE:
                 try:

@@ -1,5 +1,6 @@
 from lexical.dfa import DFA
 
+
 class VariableType(DFA):
     states = {
         "t0": {"i": "t1", "I": "t2"},

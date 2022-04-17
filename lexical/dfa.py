@@ -5,8 +5,8 @@ PROGRAM_KEYWORD = [",", ";"]
 
 class DFA:
     state = "t0"
-    value = "" 
-    
+    value = ""
+
     def reset(self):
         self.state = "t0"
         self.value = ""

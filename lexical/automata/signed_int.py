@@ -1,4 +1,4 @@
-from lexical.dfa import DFA, LexicalError, WHITESPACE, OPERATOR, PROGRAM_KEYWORD
+from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
 
 
 class SignedInteger(DFA):
