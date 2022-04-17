@@ -12,8 +12,7 @@ class VariableType(DFA):
 
     def accept(self, i, line_num):
         try:
-            self.state = self.states[self.state][i]
-            self.value += i
+            super().accept(i)
             if self.state == "t5":
                 returnVal = self.value
                 self.reset()
