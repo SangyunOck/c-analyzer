@@ -3,8 +3,6 @@ from lexical.dfa import (
     ALPHABET_UPPER,
     DFA,
     DIGIT,
-    OPERATOR,
-    PROGRAM_KEYWORD,
     WHITESPACE,
     LexicalError,
 )
@@ -19,14 +17,13 @@ class LiteralString(DFA):
 
     states = {}
     states["t0"] = {'"': "t1"}
-    for i in digits:
-        states["t1"][i] = "t2"
+    states["t1"] = {i: "t2" for i in digits}
     for i in alphabet_lower + alphabet_upper:
         states["t1"][i] = "t3"
     for i in whitespace:
         states["t1"][i] = "t4"
 
-    states["t2"]['"'] = "t5"
+    states["t2"] = {'"': "t5"}
     for i in digits:
         states["t2"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:
@@ -34,7 +31,7 @@ class LiteralString(DFA):
     for i in whitespace:
         states["t2"][i] = "t8"
 
-    states["t3"]['"'] = "t5"
+    states["t3"] = {'"': "t5"}
     for i in digits:
         states["t3"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:
@@ -42,7 +39,7 @@ class LiteralString(DFA):
     for i in whitespace:
         states["t3"][i] = "t8"
 
-    states["t4"]['"'] = "t5"
+    states["t4"] = {'"': "t5"}
     for i in digits:
         states["t4"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:
@@ -50,7 +47,7 @@ class LiteralString(DFA):
     for i in whitespace:
         states["t4"][i] = "t8"
 
-    states["t6"]['"'] = "t5"
+    states["t6"] = {'"': "t5"}
     for i in digits:
         states["t6"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:
@@ -58,7 +55,7 @@ class LiteralString(DFA):
     for i in whitespace:
         states["t6"][i] = "t8"
 
-    states["t7"]['"'] = "t5"
+    states["t7"] = {'"': "t5"}
     for i in digits:
         states["t7"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:
@@ -66,7 +63,7 @@ class LiteralString(DFA):
     for i in whitespace:
         states["t7"][i] = "t8"
 
-    states["t8"]['"'] = "t5"
+    states["t8"] = {'"': "t5"}
     for i in digits:
         states["t8"][i] = "t6"
     for i in alphabet_lower + alphabet_upper:

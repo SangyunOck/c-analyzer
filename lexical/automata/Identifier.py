@@ -14,7 +14,7 @@ class Identifier(DFA):
     for i in ALPHABET_LOWER + ALPHABET_UPPER:
         states["t3"][i] = "t3"
 
-    def accept(self, i) -> None:
+    def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
             return False, None

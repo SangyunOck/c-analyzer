@@ -2,7 +2,7 @@ from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
 
 # TODO extends DFA in order to get digis, non-zero digis, alphabets
 non_zero_digits = [str(i) for i in range(1, 10)]
-digits = non_zero_digits + [0]
+digits = non_zero_digits + ['0']
 
 
 class SignedInteger(DFA):
@@ -17,15 +17,14 @@ class SignedInteger(DFA):
     def accept(self, i, line_num):
         try:
             super().accept(i)
-            if self.state != "t4":
+            if self.state != "t3":
                 return True, None
         except KeyError:
             if self.state == "t0":
                 return False, None
             if self.state == "t1":
-                raise LexicalError(
-                    "Variable cannot start with numerical value", line_num
-                )
+                self.reset()
+                return True, 0
             if self.state == "t2":
                 raise LexicalError("Only numerical value available after " - "")
             if self.state == "t3":
