@@ -3,7 +3,6 @@ class LineBuffer:
     line_counter = 0
     current_line = ""
 
-
     def __init__(self, filename) -> None:
         self.filename = filename
 
@@ -16,7 +15,9 @@ class LineBuffer:
                         break
 
                     self.line_counter += 1
-                    yield (self.line_counter, self.current_line)
+                    self.tokens = list(self.current_line)
+                    for token in self.tokens:
+                        yield (token, self.line_counter)
 
         except FileNotFoundError:
             print("File not found")
