@@ -10,6 +10,8 @@ from lexical.automata.signed_int import SignedInteger
 from lexical.automata.symbols_for_defining import SymbolsForDefining
 from lexical.automata.symbols_for_indicating import SymbolsForIndicating
 from lexical.automata.variable import VariableType
+from lexical.automata.whitespace import WhiteSpace
+
 
 class Grammar:
     def __init__(self) -> None:
@@ -25,12 +27,23 @@ class Grammar:
         self.symbols_for_defining = SymbolsForDefining()
         self.symbols_for_indicating = SymbolsForIndicating()
         self.variable_type = VariableType()
+        self.whitespace = WhiteSpace()
 
     def check_lexeme(self, i, line_num):
-        is_arithmatic_accepted, arithmatic_type, arithmatic_value = self.arithmatic.accept(i, line_num)
-        if is_arithmatic_accepted and arithmatic_value:
-            return arithmatic_type, arithmatic_value
+        is_accepted = True, 
+        return_type = None
+        return_value = None
 
+        is_arithmatic_accepted, arithmatic_type, arithmatic_value = self.arithmatic.accept(i, line_num)
+         
+        is_accepted = is_arithmatic_accepted
+        return_type = arithmatic_type
+        return_value = arithmatic_value
+
+
+        # is_whitespace_accepted, whitespace_type, whitespace_value = self.whitespace.accept(i, line_num)
+        # if(is_whitespace_accepted):
+        #     return is_whitespace_accepted, whitespace_type, whitespace_value
         # is_assignment_accepted, assignment_type, assignment_value  = self.assignment.accept(i, line_num)
         # if is_assignment_accepted and assignment_value:
         #     return assignment_type, assignment_value
@@ -89,4 +102,4 @@ class Grammar:
         # )
         # if is_variable_type_accepted and variable_type_value:
         #     return variable_type_type, variable_type_value
-        return None, None
+        return is_accepted, return_type, return_value

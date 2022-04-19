@@ -10,13 +10,30 @@ class LexicalAnalyzer:
 
     def scan_lexemes(self):
         grammar = Grammar()
-
-        for token, line_num in self.line_buffer.read_next():
-            if token not in WHITESPACE:
+        is_popped = False
+        
+        line_buffer = self.line_buffer.read_next()
+    
+        while True:
+            if not is_popped:
                 try:
-                    token_type, token_value = grammar.check_lexeme(token, line_num)
-                    if token_type:
+                    token, line_num = next(line_buffer)
+                except StopIteration:
+                    succeeded, token_type, token_value = grammar.check_lexeme(token, line_num)
+                    if token_type and token_value:
                         print(token_type, token_value)
+                    break
+            if token:
+                try:
+                    succeeded, token_type, token_value = grammar.check_lexeme(token, line_num)
+                    if succeeded:
+                        is_popped = False
+        
+                    if token_type and token_value:
+                        print(token_type, token_value)
+                        
+                    if not succeeded:
+                        is_popped = True
                 except LexicalError as e:
                     print(e)
                     self.output_file.write(e.msg)

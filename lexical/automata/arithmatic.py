@@ -12,6 +12,6 @@ class Arithmatic(DFA):
             if self.state in ["t1", "t2", "t3", "t4"]:
                 returnVal = self.value
                 self.reset()
-                return True, "ARITHMATIC", returnVal
+                return False, "ARITHMATIC", returnVal
             else:
                 return False, None, None
