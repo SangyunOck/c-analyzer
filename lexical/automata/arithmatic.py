@@ -7,9 +7,11 @@ class Arithmatic(DFA):
     def accept(self, i, line_num):
         try:
             super().accept(i)
-            self.returnVal = self.value
-            self.reset()
-            return True, "ARITHMATIC", self.returnVal
+            return True, None, None
         except KeyError:
-            self.reset()
-            return False, None, None
+            if self.state in ["t1", "t2", "t3", "t4"]:
+                returnVal = self.value
+                self.reset()
+                return True, "ARITHMATIC", returnVal
+            else:
+                return False, None, None
