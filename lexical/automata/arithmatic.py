@@ -1,5 +1,4 @@
-from lexical.dfa import DFA
-
+from lexical.dfa import DFA, TransitionState
 
 class Arithmatic(DFA):
     states = {"t0": {"+": "t1", "-": "t2", "*": "t3", "/": "t4"}}
@@ -7,11 +6,9 @@ class Arithmatic(DFA):
     def accept(self, i, line_num):
         try:
             super().accept(i)
-            return True, None, None
+            return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t2", "t3", "t4"]:
-                returnVal = self.value
-                self.reset()
-                return False, "ARITHMATIC", returnVal
+                return TransitionState.COMPLETE, "ARITHMATIC", self.value
             else:
-                return False, None, None
+                return TransitionState.FAIL, None, None

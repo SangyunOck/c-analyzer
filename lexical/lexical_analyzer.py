@@ -8,35 +8,28 @@ class LexicalAnalyzer:
         self.line_buffer = LineBuffer(filename)
         self.output_file = open("test.out", "a")
 
+    def _write_to_file(self, accepted, token_type, token_value):
+        if accepted and token_type != "WHITESPACE" and token_value:
+            print(token_type, token_value)
+
     def scan_lexemes(self):
         grammar = Grammar()
-        is_popped = False
-        
-        line_buffer = self.line_buffer.read_next()
+        token, line_num = self.line_buffer.pop()
     
         while True:
-            if not is_popped:
-                try:
-                    token, line_num = next(line_buffer)
-                except StopIteration:
-                    succeeded, token_type, token_value = grammar.check_lexeme(token, line_num)
-                    if token_type and token_value:
-                        print(token_type, token_value)
-                    break
-            if token:
-                try:
-                    succeeded, token_type, token_value = grammar.check_lexeme(token, line_num)
-                    if succeeded:
-                        is_popped = False
-        
-                    if token_type and token_value:
-                        print(token_type, token_value)
-                        
-                    if not succeeded:
-                        is_popped = True
-                except LexicalError as e:
-                    print(e)
-                    self.output_file.write(e.msg)
-                    break
+            try:
+                if token:
+                    accepted, token_type, token_value = grammar.check_lexeme(token, line_num)
+                    if accepted:
+                        token, line_num = self.line_buffer.pop()
+                        self._write_to_file(accepted, token_type, token_value)
+            except IndexError:
+                self._write_to_file(accepted, token_type, token_value)
+                accepted, token_type, token_value = grammar.check_lexeme(token, line_num)
+                self._write_to_file(accepted, token_type, token_value)
+                break
+            except LexicalError as e:
+                self.output_file.write(e.msg)
+                break
 
         self.output_file.close()

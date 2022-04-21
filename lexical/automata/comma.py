@@ -1,4 +1,4 @@
-from lexical.dfa import DFA
+from lexical.dfa import DFA, TransitionState
 
 
 class Comma(DFA):
@@ -7,9 +7,10 @@ class Comma(DFA):
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            returnVal = self.value
-            self.reset()
-            return True, "COMMA", returnVal
+            return TransitionState.SUCCESS, None, None
         except KeyError:
-            self.reset()
-            return False, None, None
+            if self.state in ["t1"]:
+                return TransitionState.COMPLETE, "COMMA", self.value
+            else:
+                return TransitionState.FAIL, None, None
+
