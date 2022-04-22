@@ -11,7 +11,6 @@ class LineBuffer:
                 for line_num, lexemes in enumerate(reversed(total_content)):
                     for lexeme in reversed(list(lexemes)):
                         self.buffer.append((lexeme, lines_len - line_num))
-            print(self.buffer)
         except FileNotFoundError:
             print("File not found")
 
