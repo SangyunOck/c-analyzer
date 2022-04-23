@@ -1,4 +1,3 @@
-
 from lexical.dfa import DFA, TransitionState
 
 
@@ -34,4 +33,3 @@ class Operator(DFA):
                 return TransitionState.COMPLETE, "NOTEQUAL", self.value
             else:
                 return TransitionState.FAIL, None, None
-            

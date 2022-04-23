@@ -1,4 +1,11 @@
-from lexical.dfa import DFA, LexicalError, TransitionState, WHITESPACE, PROGRAM_KEYWORD, ARITHMATIC_OPERATOR
+from lexical.dfa import (
+    ARITHMATIC_OPERATOR,
+    DFA,
+    PROGRAM_KEYWORD,
+    WHITESPACE,
+    LexicalError,
+    TransitionState,
+)
 
 non_zero_digits = [str(i) for i in range(1, 10)]
 digits = non_zero_digits + [0]
@@ -22,9 +29,10 @@ class SignedInteger(DFA):
                 if i in WHITESPACE + PROGRAM_KEYWORD + ARITHMATIC_OPERATOR:
                     return TransitionState.COMPLETE, "SIGNEDINTEGER", self.value
                 else:
-                    raise LexicalError("Variable cannot start with numerical value", line_num)
+                    raise LexicalError(
+                        "Variable cannot start with numerical value", line_num
+                    )
             if self.state == "t2":
                 raise LexicalError("Numerical value needed after '-'", line_num)
             else:
                 return TransitionState.FAIL, None, None
-

@@ -1,12 +1,17 @@
-from lexical.dfa import DFA
+from lexical.dfa import DFA, TransitionState
 
 
 class SymbolsForDefining(DFA):
-    stats = {"t0": {"{", "t1", "}", "t1"}}
+    states = {
+        "t0": {"{": "t1", "}": "t1"},
+    }
 
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            return True, "SYMBOLSFORDEFINING", self.value
+            return TransitionState.SUCCESS, None, None
         except KeyError:
-            return False, None, None
+            if self.state == "t1":
+                return TransitionState.COMPLETE, "SYMBOLSFORDEFINING", self.value
+            else:
+                return TransitionState.FAIL, None, None

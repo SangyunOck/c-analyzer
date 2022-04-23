@@ -3,11 +3,12 @@ from enum import Enum
 
 WHITESPACE = [" ", "\t", "\0", "\n"]
 ARITHMATIC_OPERATOR = ["+", "-", "*", "/"]
-PROGRAM_KEYWORD = [",", ";"]
+PROGRAM_KEYWORD = [",", ";", "="]
 NON_ZERO_DIGIT = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 DIGIT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 ALPHABET_LOWER = list(string.ascii_lowercase)
 ALPHABET_UPPER = list(string.ascii_uppercase)
+
 
 class TransitionState(Enum):
     FAIL = 0

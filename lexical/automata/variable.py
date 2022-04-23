@@ -1,4 +1,4 @@
-from lexical.dfa import DFA
+from lexical.dfa import DFA, TransitionState
 
 
 class VariableType(DFA):
@@ -13,11 +13,9 @@ class VariableType(DFA):
     def accept(self, i, line_num):
         try:
             super().accept(i)
-            if self.state == "t5":
-                returnVal = self.value
-                self.reset()
-                return True, "VARIABLETYPE", returnVal
-            else:
-                return True, None, None
+            return TransitionState.SUCCESS, None, None
         except KeyError:
-            return False, None, None
+            if self.state == "t5":
+                return TransitionState.COMPLETE, "VARIABLETYPE", self.value
+            else:
+                return TransitionState.FAIL, None, None

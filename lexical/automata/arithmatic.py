@@ -1,5 +1,6 @@
 from lexical.dfa import DFA, TransitionState
 
+
 class Arithmatic(DFA):
     states = {"t0": {"+": "t1", "-": "t2", "*": "t3", "/": "t4"}}
 

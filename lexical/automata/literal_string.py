@@ -20,7 +20,6 @@ class LiteralString(DFA):
         "t1": {i: "t1" for i in letters + digits + whitespace},
     }
     states["t1"]['"'] = "t2"
-    
 
     def accept(self, i, line_num) -> None:
         try:

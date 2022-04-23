@@ -3,7 +3,7 @@ from lexical.dfa import DFA, TransitionState
 
 class WhiteSpace(DFA):
     states = {
-        "t0": {"\n": "t1", "\0": "t2", "\t":"t3", " ": "t4"},
+        "t0": {"\n": "t1", "\0": "t2", "\t": "t3", " ": "t4"},
     }
 
     def accept(self, i, line_num) -> None:

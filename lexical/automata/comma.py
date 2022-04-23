@@ -13,4 +13,3 @@ class Comma(DFA):
                 return TransitionState.COMPLETE, "COMMA", self.value
             else:
                 return TransitionState.FAIL, None, None
-
