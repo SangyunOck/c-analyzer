@@ -1,8 +1,0 @@
-+---------------+-------------+
-|   Token name  | Token value |
-+---------------+-------------+
-|   IFKEYWORD   |      if     |
-| SIGNEDINTEGER |     123     |
-|   IFKEYWORD   |      if     |
-| SIGNEDINTEGER |     123     |
-+---------------+-------------+

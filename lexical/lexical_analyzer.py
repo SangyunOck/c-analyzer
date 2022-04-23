@@ -1,6 +1,6 @@
 from prettytable import PrettyTable
 
-from lexical.dfa import SPECIAL_CHARS, LexicalError, TransitionState
+from lexical.dfa import SPECIAL_CHARS, ALPHABET_LOWER, ALPHABET_UPPER, DIGIT, LexicalError, TransitionState
 from lexical.grammar import Grammar
 from tools.line_buffer import LineBuffer
 
@@ -41,8 +41,9 @@ class LexicalAnalyzer:
                     )
 
                     if accepted == TransitionState.COMPLETE:
-                        self._add_to_table(accepted, token_type, token_value)
-                        grammar.reset_all_states()
+                        if token not in ALPHABET_LOWER + ALPHABET_UPPER + DIGIT:
+                            self._add_to_table(accepted, token_type, token_value)
+                            grammar.reset_all_states()
                     elif accepted in [TransitionState.SUCCESS, TransitionState.FAIL]:
                         token, line_num = self.line_buffer.pop()
 
