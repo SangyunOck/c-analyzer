@@ -26,13 +26,7 @@ class SignedInteger(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t3", "t4"]:
-                if i in WHITESPACE + PROGRAM_KEYWORD + ARITHMATIC_OPERATOR:
-                    return TransitionState.COMPLETE, "SIGNEDINTEGER", self.value
-                else:
-                    raise LexicalError(
-                        "Variable cannot start with numerical value", line_num
-                    )
-            if self.state == "t2":
-                raise LexicalError("Numerical value needed after '-'", line_num)
+                return TransitionState.COMPLETE, "SIGNEDINTEGER", self.value
+                
             else:
                 return TransitionState.FAIL, None, None

@@ -8,18 +8,18 @@ from lexical.automata.semicolon import Semicolon
 from lexical.automata.signed_int import SignedInteger
 from lexical.automata.symbols_for_defining import SymbolsForDefining
 from lexical.automata.symbols_for_indicating import SymbolsForIndicating
-from lexical.automata.variable import VariableType
+from lexical.automata.variable import CharVariableType, IntVariableType
 from lexical.automata.whitespace import WhiteSpace
 from lexical.dfa import TransitionState
 
 
 class Grammar:
-    complete_counter = 0
+    success_counter = 0
     transition_state = None
     return_type = None
     return_value = None
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.arithmatic = Arithmatic()
         self.comma = Comma()
         self.operator = Operator()
@@ -33,11 +33,12 @@ class Grammar:
         self.signed_integer = SignedInteger()
         self.symbols_for_defining = SymbolsForDefining()
         self.symbols_for_indicating = SymbolsForIndicating()
-        self.variable_type = VariableType()
+        self.int_variable_type = IntVariableType()
+        self.char_variable_type = CharVariableType()
         self.whitespace = WhiteSpace()
 
     def reset_all_states(self):
-        self.complete_counter = 0
+        self.success_counter = 0
         self.transition_state, self.return_type, self.return_value = (
             TransitionState.FAIL,
             None,
@@ -56,7 +57,8 @@ class Grammar:
         self.signed_integer.reset()
         self.symbols_for_defining.reset()
         self.symbols_for_indicating.reset()
-        self.variable_type.reset()
+        self.int_variable_type.reset()
+        self.char_variable_type.reset()
         self.whitespace.reset()
 
     def process_acception(self, automata, i, line_num):
@@ -70,20 +72,23 @@ class Grammar:
 
         if transition_state == TransitionState.COMPLETE:
             self.return_type, self.return_value = return_type, return_value
-            self.complete_counter += 1
+            
+        if transition_state == TransitionState.SUCCESS:
+            self.success_counter += 1
 
     def check_lexeme(self, i, line_num):
         self.process_acception(self.whitespace, i, line_num)
+        self.process_acception(self.signed_integer, i, line_num)
         self.process_acception(self.arithmatic, i, line_num)
         self.process_acception(self.comma, i, line_num)
         self.process_acception(self.operator, i, line_num)
         self.process_acception(self.literal_string, i, line_num)
-        self.process_acception(self.signed_integer, i, line_num)
         self.process_acception(self.identifier, i, line_num)
         self.process_acception(self.semicolon, i, line_num)
         self.process_acception(self.symbols_for_defining, i, line_num)
         self.process_acception(self.symbols_for_indicating, i, line_num)
-        self.process_acception(self.variable_type, i, line_num)
+        self.process_acception(self.int_variable_type, i, line_num)
+        self.process_acception(self.char_variable_type, i, line_num)
         self.process_acception(self.if_keyword, i, line_num)
         self.process_acception(self.else_keyword, i, line_num)
         self.process_acception(self.while_keyword, i, line_num)
@@ -95,4 +100,4 @@ class Grammar:
         return self.transition_state, None, None
 
     def is_accepted(self):
-        return self.complete_counter
+        return self.success_counter

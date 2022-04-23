@@ -1,7 +1,7 @@
 class LineBuffer:
     buffer = []
 
-    def __init__(self, filename) -> None:
+    def __init__(self, filename):
         try:
             with open(filename) as f:
                 total_content = f.readlines()

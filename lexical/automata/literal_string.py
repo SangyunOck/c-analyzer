@@ -3,6 +3,7 @@ from lexical.dfa import (
     ALPHABET_UPPER,
     DFA,
     DIGIT,
+    SPECIAL_CHARS,
     WHITESPACE,
     LexicalError,
     TransitionState,
@@ -11,17 +12,18 @@ from lexical.dfa import (
 digits = DIGIT
 whitespace = WHITESPACE
 letters = ALPHABET_LOWER + ALPHABET_UPPER
+special_chars = SPECIAL_CHARS
 
 
 class LiteralString(DFA):
 
     states = {
         "t0": {'"': "t1"},
-        "t1": {i: "t1" for i in letters + digits + whitespace},
+        "t1": {i: "t1" for i in letters + digits + whitespace + special_chars},
     }
     states["t1"]['"'] = "t2"
 
-    def accept(self, i, line_num) -> None:
+    def accept(self, i, line_num):
         try:
             super().accept(i)
             return TransitionState.SUCCESS, None, None
