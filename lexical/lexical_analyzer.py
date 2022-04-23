@@ -27,15 +27,16 @@ class LexicalAnalyzer:
                     if accepted == TransitionState.COMPLETE:
                         self._write_to_file(accepted, token_type, token_value)
                         grammar.reset_all_states()
-                    else:
-                        token, line_num = self.line_buffer.pop()    
+                    elif accepted in [TransitionState.SUCCESS, TransitionState.FAIL]:
+                        token, line_num = self.line_buffer.pop()
             except IndexError:
                 self._write_to_file(accepted, token_type, token_value)
                 accepted, token_type, token_value = grammar.check_lexeme(token, line_num)
                 self._write_to_file(accepted, token_type, token_value)
                 break
             except LexicalError as e:
-                self.output_file.write(e.msg)
+                self.output_file.write(e.msg + "\n")
+                print(e.msg)
                 break
 
         self.output_file.close()

@@ -1,4 +1,4 @@
-from lexical.dfa import DFA
+from lexical.dfa import DFA, TransitionState
 
 
 class Semicolon(DFA):
@@ -7,6 +7,9 @@ class Semicolon(DFA):
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            return True, "SEMICOLON", self.value
+            return TransitionState.SUCCESS, None, None
         except KeyError:
-            return False, None, None
+            if self.state == "t1":
+                return TransitionState.COMPLETE, "SEMICOLON", self.value
+            else:
+                return TransitionState.FAIL, None, None

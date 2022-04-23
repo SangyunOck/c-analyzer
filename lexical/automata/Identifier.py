@@ -1,4 +1,4 @@
-from lexical.dfa import ALPHABET_LOWER, ALPHABET_UPPER, DFA, DIGIT
+from lexical.dfa import ALPHABET_LOWER, ALPHABET_UPPER, DFA, DIGIT, TransitionState
 
 
 class Identifier(DFA):
@@ -11,13 +11,16 @@ class Identifier(DFA):
     for i in DIGIT:
         states["t1"][i] = "t3"
         states["t2"][i] = "t3"
+        states["t3"][i] = "t3"
     for i in ALPHABET_LOWER + ALPHABET_UPPER:
         states["t3"][i] = "t3"
 
     def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            return False, None, None
+            return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t2", "t3"]:
-                return True, "IDENTIFIER", self.value
+                return TransitionState.COMPLETE, "IDENTIFIER", self.value
+            else:
+                return TransitionState.FAIL, None, None

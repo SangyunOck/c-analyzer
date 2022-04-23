@@ -1,6 +1,5 @@
-from lexical.dfa import DFA, OPERATOR, PROGRAM_KEYWORD, WHITESPACE, LexicalError
+from lexical.dfa import DFA, LexicalError, TransitionState, WHITESPACE, PROGRAM_KEYWORD, ARITHMATIC_OPERATOR
 
-# TODO extends DFA in order to get digis, non-zero digis, alphabets
 non_zero_digits = [str(i) for i in range(1, 10)]
 digits = non_zero_digits + [0]
 
@@ -14,28 +13,18 @@ class SignedInteger(DFA):
     states["t2"] = {i: "t3" for i in non_zero_digits}
     states["t3"] = {i: "t3" for i in digits}
 
-    def accept(self, i, line_num):
+    def accept(self, i, line_num) -> None:
         try:
             super().accept(i)
-            if self.state != "t4":
-                return True, None, None
+            return TransitionState.SUCCESS, None, None
         except KeyError:
-            if self.state == "t0":
-                return False, None, None
-            if self.state == "t1":
-                raise LexicalError(
-                    "Variable cannot start with numerical value", line_num
-                )
-            if self.state == "t2":
-                raise LexicalError("Only numerical value available after " - "")
-            if self.state == "t3":
-                if i in WHITESPACE + OPERATOR + PROGRAM_KEYWORD:
-                    returnVal = self.value
-                    self.reset()
-                    return True, "SIGNEDINTEGER", int(returnVal)
+            if self.state in ["t1", "t3", "t4"]:
+                if i in WHITESPACE + PROGRAM_KEYWORD + ARITHMATIC_OPERATOR:
+                    return TransitionState.COMPLETE, "SIGNEDINTEGER", self.value
                 else:
-                    raise LexicalError(
-                        "Only numerical value available after number", line_num
-                    )
+                    raise LexicalError("Variable cannot start with numerical value", line_num)
+            if self.state == "t2":
+                raise LexicalError("Numerical value needed after '-'", line_num)
+            else:
+                return TransitionState.FAIL, None, None
 
-        return False, None, None

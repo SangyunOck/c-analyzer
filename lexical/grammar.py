@@ -14,7 +14,7 @@ from lexical.automata.whitespace import WhiteSpace
 
 
 class Grammar:
-    transition_state = TransitionState.FAIL
+    transition_state = None
     return_type = None
     return_value = None
 
@@ -50,6 +50,9 @@ class Grammar:
 
     def process_acception(self, automata, i, line_num):
         transition_state, return_type, return_value = automata.accept(i, line_num)
+
+        if transition_state == TransitionState.FAIL:
+            automata.block()
         
         if self.transition_state != TransitionState.COMPLETE:
             self.transition_state = transition_state
@@ -58,10 +61,16 @@ class Grammar:
             self.return_type, self.return_value = return_type, return_value
 
     def check_lexeme(self, i, line_num):
-        self.process_acception(self.whitespace, i, line_num)
-        self.process_acception(self.arithmatic, i, line_num)
-        self.process_acception(self.comma, i, line_num)
-        self.process_acception(self.operator, i, line_num)
+        # self.process_acception(self.whitespace, i, line_num)
+        # self.process_acception(self.arithmatic, i, line_num)
+        # self.process_acception(self.comma, i, line_num)
+        # self.process_acception(self.operator, i, line_num)
+        self.process_acception(self.literal_string, i, line_num)
+        # self.process_acception(self.signed_integer, i, line_num)
+        # self.process_acception(self.identifier, i, line_num)
+        # self.process_acception(self.semicolon, i, line_num)
+        
+        
         
         
         if self.return_type and self.return_value:

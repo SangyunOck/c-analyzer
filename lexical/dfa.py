@@ -2,7 +2,7 @@ import string
 from enum import Enum
 
 WHITESPACE = [" ", "\t", "\0", "\n"]
-OPERATOR = ["+", "-", "*", "/"]
+ARITHMATIC_OPERATOR = ["+", "-", "*", "/"]
 PROGRAM_KEYWORD = [",", ";"]
 NON_ZERO_DIGIT = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 DIGIT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
