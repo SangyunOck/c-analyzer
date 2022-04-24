@@ -41,9 +41,8 @@ class LexicalAnalyzer:
                     )
 
                     if accepted == TransitionState.COMPLETE:
-                        if token not in ALPHABET_LOWER + ALPHABET_UPPER + DIGIT:
-                            self._add_to_table(accepted, token_type, token_value)
-                            grammar.reset_all_states()
+                        self._add_to_table(accepted, token_type, token_value)
+                        grammar.reset_all_states()
                     elif accepted in [TransitionState.SUCCESS, TransitionState.FAIL]:
                         token, line_num = self.line_buffer.pop()
 
