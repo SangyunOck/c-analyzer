@@ -1,8 +1,13 @@
-from lexical.dfa import DFA, TransitionState
+from unicodedata import digit
+from lexical.dfa import DFA, TransitionState, ALPHABET_LOWER, ALPHABET_UPPER, DIGIT
 
 
 class IFKeyword(DFA):
     states = {"t0": {"i": "t1", "I": "t2"}, "t1": {"f": "t3"}, "t2": {"F": "t4"}}
+    for i in DIGIT, ALPHABET_LOWER, ALPHABET_UPPER:
+        states["t3"][i] = "t5"
+        states["t4"][i] = "t5"
+
 
     def accept(self, i, line_num) -> None:
         try:
@@ -25,6 +30,9 @@ class ElSEKeyword(DFA):
         "t5": {"e": "t7"},
         "t6": {"E": "t8"},
     }
+    for i in DIGIT, ALPHABET_LOWER, ALPHABET_UPPER:
+        states["t7"][i] = "t9"
+        states["t8"][i] = "t9"
 
     def accept(self, i, line_num) -> None:
         try:
@@ -49,6 +57,9 @@ class WHILEKeyword(DFA):
         "t7": {"e": "t9"},
         "t8": {"E": "t10"},
     }
+    for i in DIGIT, ALPHABET_LOWER, ALPHABET_UPPER:
+        states["t9"][i] = "t11"
+        states["t10"][i] = "t11"
 
     def accept(self, i, line_num) -> None:
         try:
@@ -75,6 +86,9 @@ class RETURNKeyword(DFA):
         "t9": {"n": "t11"},
         "t10": {"N": "t12"},
     }
+    for i in DIGIT, ALPHABET_LOWER, ALPHABET_UPPER:
+        states["t11"][i] = "t13"
+        states["t12"][i] = "t13"
 
     def accept(self, i, line_num) -> None:
         try:
