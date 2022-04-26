@@ -97,10 +97,7 @@ class Grammar:
         self.process_acception(self.while_keyword, i, line_num)
         self.process_acception(self.return_keyword, i, line_num)
 
-        if self.return_type and self.return_value:
-            return self.transition_state, self.return_type, self.return_value
-
-        return self.transition_state, None, None
+        return self.transition_state, self.return_type, self.return_value
 
     def is_accepted(self):
         return self.complete_counter
