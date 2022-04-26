@@ -1,9 +1,5 @@
 from lexical.dfa import (
-    ARITHMATIC_OPERATOR,
     DFA,
-    PROGRAM_KEYWORD,
-    WHITESPACE,
-    LexicalError,
     TransitionState,
 )
 

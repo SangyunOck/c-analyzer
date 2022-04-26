@@ -1,11 +1,6 @@
 from prettytable import PrettyTable
 
-from lexical.dfa import (
-    SPECIAL_CHARS,
-    NON_ZERO_DIGIT,
-    LexicalError,
-    TransitionState,
-)
+from lexical.dfa import NON_ZERO_DIGIT, SPECIAL_CHARS, LexicalError, TransitionState
 from lexical.grammar import Grammar
 from tools.line_buffer import LineBuffer
 
@@ -30,7 +25,6 @@ class LexicalAnalyzer:
     def scan_lexemes(self):
         grammar = Grammar()
         token = ""
-        counter = 1
 
         try:
             token, line_num = self.line_buffer.pop()
@@ -54,26 +48,26 @@ class LexicalAnalyzer:
                             for _ in range(self.minus_counter):
                                 self._add_to_table(accepted, "ARITHMATIC", "-")
                                 self.minus_counter -= 1
-    
+
                         if token_value in NON_ZERO_DIGIT:
                             if self.prev_token_type in ["IDENTIFIER", "SIGNEDINTEGER"]:
                                 if self.minus_counter == 1:
                                     self._add_to_table(accepted, "ARITHMATIC", "-")
                                     self.minus_counter = 0
-                                
+
                                 elif self.minus_counter == 2:
                                     self._add_to_table(accepted, "ARITHMATIC", "-")
                                     token_value = "-" + token_value
                                     self.minus_counter = 0
                             else:
                                 if self.minus_counter == 1:
-                                    self.minus_counter -=1
+                                    self.minus_counter -= 1
                                     token_value = "-" + token_value
                                 elif self.minus_counter == 2:
                                     self._add_to_table(accepted, "ARITHMATIC", "-")
                                     token_value = "-" + token_value
                                     self.minus_counter = 0
-    
+
                         if token_value != "-":
                             self._add_to_table(accepted, token_type, token_value)
                             self.prev_token_type = token_type

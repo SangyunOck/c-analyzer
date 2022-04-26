@@ -1,5 +1,3 @@
-from re import A
-
 from lexical.dfa import ALPHABET_LOWER, ALPHABET_UPPER, DFA, DIGIT, TransitionState
 
 
