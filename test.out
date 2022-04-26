@@ -1,0 +1,8 @@
++---------------+-------------+
+|   Token name  | Token value |
++---------------+-------------+
+|   IDENTIFIER  |      a      |
+|   ARITHMATIC  |      -      |
+|   ARITHMATIC  |      -      |
+| SIGNEDINTEGER |      -1     |
++---------------+-------------+

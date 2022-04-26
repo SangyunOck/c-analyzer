@@ -1,25 +1,21 @@
-# 메모리 위에 올라가지 못하는 경우를 방지하기 위해 buffer 설정
 class LineBuffer:
-    line_counter = 0
-    current_line = ""
+    buffer = []
 
-    def __init__(self, filename) -> None:
-        self.filename = filename
-
-    def read_next(self):
+    def __init__(self, filename):
         try:
-            with open(self.filename) as f:
-                while True:
-                    self.current_line = f.readline()
-                    if self.current_line == "" or self.current_line is None:
-                        break
-
-                    self.line_counter += 1
-                    self.tokens = list(self.current_line)
-                    for token in self.tokens:
-                        yield (token, self.line_counter)
-
+            with open(filename) as f:
+                total_content = f.readlines()
+                lines_len = len(total_content)
+                self.buffer.append((" ", lines_len))
+                for line_num, lexemes in enumerate(reversed(total_content)):
+                    for lexeme in reversed(list(lexemes)):
+                        self.buffer.append((lexeme, lines_len - line_num))
         except FileNotFoundError:
             print("File not found")
-        except Exception:
-            print("UnExpected Error")
+
+    def pop(self):
+        top = self.buffer.pop()
+        return top
+
+    def peek(self):
+        return self.buffer[-1]
