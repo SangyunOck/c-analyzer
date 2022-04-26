@@ -14,7 +14,7 @@ from lexical.dfa import TransitionState
 
 
 class Grammar:
-    success_counter = 0
+    complete_counter = 0
     transition_state = None
     return_type = None
     return_value = None
@@ -38,7 +38,7 @@ class Grammar:
         self.whitespace = WhiteSpace()
 
     def reset_all_states(self):
-        self.success_counter = 0
+        self.complete_counter = 0
         self.transition_state, self.return_type, self.return_value = (
             TransitionState.FAIL,
             None,
@@ -61,20 +61,23 @@ class Grammar:
         self.char_variable_type.reset()
         self.whitespace.reset()
 
+    # 오토마타를 transision시키는 메소드들을 일괄적으로 처리
     def process_acception(self, automata, i, line_num):
+        # 새로운 문자를 받고, accept 여부, 인식된 token의 type과 value
         transition_state, return_type, return_value = automata.accept(i, line_num)
 
+        # transition에 실패하면 해당 오토마타를 block하여 더이상 transition이 불가하도록 만듦
         if transition_state == TransitionState.FAIL:
             automata.block()
 
+        # 아직까지 complete를 시킨 오토마타가 존재하지 않으면 state갱신
         if self.transition_state != TransitionState.COMPLETE:
             self.transition_state = transition_state
 
+        # 오토마타가 성공적으로 final state에 이르면 반환값을 저장
         if transition_state == TransitionState.COMPLETE:
             self.return_type, self.return_value = return_type, return_value
-
-        if transition_state == TransitionState.SUCCESS:
-            self.success_counter += 1
+            self.complete_counter += 1
 
     def check_lexeme(self, i, line_num):
         self.process_acception(self.whitespace, i, line_num)
@@ -100,4 +103,4 @@ class Grammar:
         return self.transition_state, None, None
 
     def is_accepted(self):
-        return self.success_counter
+        return self.complete_counter
