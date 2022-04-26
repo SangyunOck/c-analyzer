@@ -78,8 +78,8 @@ class Grammar:
 
     def check_lexeme(self, i, line_num):
         self.process_acception(self.whitespace, i, line_num)
-        self.process_acception(self.signed_integer, i, line_num)
         self.process_acception(self.arithmatic, i, line_num)
+        self.process_acception(self.signed_integer, i, line_num)
         self.process_acception(self.comma, i, line_num)
         self.process_acception(self.operator, i, line_num)
         self.process_acception(self.literal_string, i, line_num)
