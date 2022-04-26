@@ -72,7 +72,7 @@ class Grammar:
 
         if transition_state == TransitionState.COMPLETE:
             self.return_type, self.return_value = return_type, return_value
-            
+
         if transition_state == TransitionState.SUCCESS:
             self.success_counter += 1
 
