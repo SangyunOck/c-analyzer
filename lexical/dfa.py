@@ -14,7 +14,10 @@ SPECIAL_CHARS = [
 ALPHABET_LOWER = list(string.ascii_lowercase)
 ALPHABET_UPPER = list(string.ascii_uppercase)
 
-
+# transition state를 담고 있는 enum class
+# FAIL: transition 실패
+# SUCCESS: transition성공, final state에 도달하지는 못함
+# COMPLETE: transition실패, final state에 도달
 class TransitionState(Enum):
     FAIL = 0
     SUCCESS = 1
