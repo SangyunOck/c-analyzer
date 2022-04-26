@@ -7,18 +7,9 @@ PROGRAM_KEYWORD = [",", ";", "="]
 NON_ZERO_DIGIT = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 DIGIT = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 SPECIAL_CHARS = [
-    "!",
     "@",
     "#",
     "$",
-    "%",
-    "^",
-    "&",
-    "_",
-    "{",
-    "}",
-    "[",
-    "]",
 ]
 ALPHABET_LOWER = list(string.ascii_lowercase)
 ALPHABET_UPPER = list(string.ascii_uppercase)

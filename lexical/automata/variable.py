@@ -1,5 +1,6 @@
 from re import A
-from lexical.dfa import DFA, TransitionState, DIGIT, ALPHABET_LOWER, ALPHABET_UPPER
+
+from lexical.dfa import ALPHABET_LOWER, ALPHABET_UPPER, DFA, DIGIT, TransitionState
 
 
 class IntVariableType(DFA):
@@ -9,9 +10,10 @@ class IntVariableType(DFA):
         "t2": {"N": "t4"},
         "t3": {"t": "t5"},
         "t4": {"T": "t5"},
+        "t5": {},
     }
     for i in DIGIT + ALPHABET_LOWER + ALPHABET_UPPER:
-        states["t5"] = {i : "t6"}
+        states["t5"][i] = "t6"
 
     def accept(self, i, line_num):
         try:
@@ -33,9 +35,10 @@ class CharVariableType(DFA):
         "t4": {"A": "t6"},
         "t5": {"r": "t7"},
         "t6": {"R": "t7"},
+        "t7": {},
     }
     for i in DIGIT + ALPHABET_LOWER + ALPHABET_UPPER:
-        states["t7"] = {i : "t8"}
+        states["t7"][i] = "t8"
 
     def accept(self, i, line_num):
         try:
