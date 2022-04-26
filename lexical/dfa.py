@@ -34,6 +34,7 @@ class DFA:
         self.value = ""
         self.is_blocked = False
 
+    # line_num은 추후 syntactic anlyzer에서 error handling을 위해 사용
     def accept(self, i, line_num):
         if not self.is_blocked:
             self.state = self.states[self.state][i]
