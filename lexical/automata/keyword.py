@@ -17,7 +17,7 @@ class IFKeyword(DFA):
 
     def accept(self, i, line_num) -> None:
         try:
-            super().accept(i)
+            super().accept(i, line_num)
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t3", "t4"]:
@@ -44,7 +44,7 @@ class ElSEKeyword(DFA):
 
     def accept(self, i, line_num) -> None:
         try:
-            super().accept(i)
+            super().accept(i, line_num)
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t7", "t8"]:
@@ -73,7 +73,7 @@ class WHILEKeyword(DFA):
 
     def accept(self, i, line_num) -> None:
         try:
-            super().accept(i)
+            super().accept(i, line_num)
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t9", "t10"]:
@@ -104,7 +104,7 @@ class RETURNKeyword(DFA):
 
     def accept(self, i, line_num) -> None:
         try:
-            super().accept(i)
+            super().accept(i, line_num)
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t11", "t12"]:

@@ -6,7 +6,7 @@ class Arithmatic(DFA):
 
     def accept(self, i, line_num):
         try:
-            super().accept(i)
+            super().accept(i, line_num)
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t2", "t3", "t4"]:

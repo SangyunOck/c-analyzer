@@ -1,5 +1,27 @@
-Need " to complete string, 1
-+------------+-------------+
-| Token name | Token value |
-+------------+-------------+
-+------------+-------------+
++----------------------+-------------+
+|      Token name      | Token value |
++----------------------+-------------+
+|     INTVARIABLE      |     int     |
+|      IDENTIFIER      |     main    |
+| SYMBOLSFORINDICATING |      (      |
+| SYMBOLSFORINDICATING |      )      |
+|  SYMBOLSFORDEFINING  |      {      |
+|     CHARVARIABLE     |     char    |
+|      IDENTIFIER      |    if123    |
+|      ASSIGNMENT      |      =      |
+|    LITERALSTRING     |     "1"     |
+|      SEMICOLON       |      ;      |
+|     INTVARIABLE      |     int     |
+|    SIGNEDINTEGER     |      0      |
+|      IDENTIFIER      |      a      |
+|      ASSIGNMENT      |      =      |
+|      IDENTIFIER      |      a      |
+|      ARITHMATIC      |      +      |
+|    SIGNEDINTEGER     |      -1     |
+|      SEMICOLON       |      ;      |
+|    RETURNKEYWORD     |    return   |
+|      ARITHMATIC      |      -      |
+|    SIGNEDINTEGER     |      0      |
+|      SEMICOLON       |      ;      |
+|  SYMBOLSFORDEFINING  |      }      |
++----------------------+-------------+
