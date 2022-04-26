@@ -1,4 +1,5 @@
-import sys  
+import sys
+
 from lexical.lexical_analyzer import LexicalAnalyzer
 
 if __name__ == "__main__":
