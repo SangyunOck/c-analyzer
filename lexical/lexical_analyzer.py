@@ -72,6 +72,9 @@ class LexicalAnalyzer:
                                     self.minus_counter = 0
 
                         if token_value != "-":
+                            for _ in range(self.minus_counter):
+                                self._add_to_table(accepted, "ARITHMATIC", "-")
+                                self.minus_counter -= 1
                             self._add_to_table(accepted, token_type, token_value)
                             self.prev_token_type = token_type
 
@@ -87,7 +90,6 @@ class LexicalAnalyzer:
                         token, line_num = self.line_buffer.pop()
             # 마지막 문자까지 가져온 후 현재 체크중인 문자로 한번 더 확인
             except IndexError:
-                self._add_to_table(accepted, token_type, token_value)
                 accepted, token_type, token_value = grammar.check_lexeme(
                     token, line_num
                 )
