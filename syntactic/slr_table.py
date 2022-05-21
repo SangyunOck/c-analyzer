@@ -34,7 +34,7 @@ symbols = [
     "RETURN",
 ]
 
-state = {
+states = {
     "0": [
         "s4",
         " ",
@@ -2455,8 +2455,9 @@ state = {
 def get_rules():
     rules = {}
 
-    for state, transition in state.items():
+    for state, transition in states.items():
         for idx, t in enumerate(transition):
+            state = int(state)
             if state in rules.keys():
                 rules[state][symbols[idx]] = t
             else:
