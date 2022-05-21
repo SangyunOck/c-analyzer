@@ -1,13 +1,20 @@
-+----------------------+-------------+
-|      Token name      | Token value |
-+----------------------+-------------+
-|     INTVARIABLE      |     int     |
-|      IDENTIFIER      |     main    |
-| SYMBOLSFORINDICATING |      (      |
-| SYMBOLSFORINDICATING |      )      |
-|  SYMBOLSFORDEFINING  |      {      |
-|    RETURNKEYWORD     |    return   |
-|    SIGNEDINTEGER     |      0      |
-|      SEMICOLON       |      ;      |
-|  SYMBOLSFORDEFINING  |      }      |
-+----------------------+-------------+
++------------+-------------+
+| Token name | Token value |
++------------+-------------+
+|   vtype    |     int     |
+|     id     |     main    |
+|   lparen   |      (      |
+|   rparen   |      )      |
+|   lbrace   |      {      |
+|   vtype    |     char    |
+|     id     |      a      |
+|    semi    |      ;      |
+|     id     |      a      |
+|   assign   |      =      |
+|  literal   |     "1"     |
+|    semi    |      ;      |
+|   return   |    return   |
+|    num     |      0      |
+|    semi    |      ;      |
+|   rbrace   |      }      |
++------------+-------------+

@@ -19,7 +19,7 @@ class IntVariableType(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state == "t5":
-                return TransitionState.COMPLETE, "INTVARIABLE", self.value
+                return TransitionState.COMPLETE, "vtype", self.value
             else:
                 return TransitionState.FAIL, None, None
 
@@ -44,6 +44,6 @@ class CharVariableType(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state == "t7":
-                return TransitionState.COMPLETE, "CHARVARIABLE", self.value
+                return TransitionState.COMPLETE, "vtype", self.value
             else:
                 return TransitionState.FAIL, None, None

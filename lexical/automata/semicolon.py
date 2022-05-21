@@ -10,6 +10,6 @@ class Semicolon(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state == "t1":
-                return TransitionState.COMPLETE, "SEMICOLON", self.value
+                return TransitionState.COMPLETE, "semi", self.value
             else:
                 return TransitionState.FAIL, None, None

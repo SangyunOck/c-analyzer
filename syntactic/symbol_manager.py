@@ -1,3 +1,5 @@
+from syntactic.models import SLRGrammarData
+
 symbols = [
     "vtype",
     "id",
@@ -2452,6 +2454,37 @@ states = {
     ],
 }
 
+CFG = \
+'''
+CODEPRIME > CODE
+CODE > VDECL CODE
+CODE > FDECL CODE
+CODE > ''
+VDECL > vtype id semi
+FDECL > vtype id lparen ARG rparen lbrace BLOCK RETURN rbrace
+ARG > vtype id MOREARGS
+ARG > ''
+MOREARGS > comma vtype id MOREARGS
+MOREARGS > ''
+BLOCK > STMT BLOCK
+BLOCK > ''
+STMT > VDECL
+STMT > id assign RHS semi
+STMT > if lparen COND rparen lbrace BLOCK rbrace else lbrace BLOCK rbrace
+STMT > while lparen COND rparen lbrace BLOCK rbrace
+RHS > EXPR
+RHS > literal
+EXPR > TERM addsub EXPR
+EXPR > TERM
+TERM > FACTOR multdiv TERM
+TERM > FACTOR
+FACTOR > lparen EXPR rparen
+FACTOR > id
+FACTOR > num
+COND > FACTOR comp FACTOR
+RETURN > return FACTOR semi
+'''
+
 def get_rules():
     rules = {}
 
@@ -2464,3 +2497,17 @@ def get_rules():
                 rules[state] = {symbols[idx]: t}
 
     return rules
+
+def get_slr_grammar():
+    slr_grammer = {}
+
+    for idx, item in enumerate(CFG.strip().split("\n")):
+        lhs, rhs = item.split(">")
+        splited_rhs = rhs.strip().split()
+        rhs_len = len(splited_rhs)
+        if splited_rhs == ["''"]:
+            rhs_len = 0
+
+        slr_grammer[idx] = SLRGrammarData(lhs=lhs.strip(), rhs_length=rhs_len)
+        
+    return slr_grammer

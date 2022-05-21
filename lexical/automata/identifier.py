@@ -21,6 +21,6 @@ class Identifier(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t2", "t3"]:
-                return TransitionState.COMPLETE, "IDENTIFIER", self.value
+                return TransitionState.COMPLETE, "id", self.value
             else:
                 return TransitionState.FAIL, None, None

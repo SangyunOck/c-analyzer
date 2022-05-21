@@ -7,6 +7,7 @@ from tools.line_buffer import LineBuffer
 
 class LexicalAnalyzer:
     def __init__(self, filename):
+        self.tokens = []
         self.line_buffer = LineBuffer(filename)
         self.output_file = open("test.out", "w")
         self.table = PrettyTable(["Token name", "Token value"])
@@ -21,7 +22,7 @@ class LexicalAnalyzer:
             and token_value
         ):
             self.table.add_row([token_type, token_value])
-            print(token_type, token_value)
+            self.tokens.append(token_type)
 
     # 한글짜씩 읽어 오토마타의 transition을 일으키는 메소드
     def scan_lexemes(self):
@@ -47,19 +48,19 @@ class LexicalAnalyzer:
                     # transition에 실패 후, 오토마타의 state가 final state일 때 complete을 반환
                     # -, 0과 관련된 후처리를 하기 위한 구문
                     if accepted == TransitionState.COMPLETE:
-                        if (token_type, token_value) == ("SIGNEDINTEGER", "0"):
+                        if (token_type, token_value) == ("num", "0"):
                             for _ in range(self.minus_counter):
-                                self._add_to_table(accepted, "ARITHMATIC", "-")
+                                self._add_to_table(accepted, "addsub", "-")
                                 self.minus_counter -= 1
 
                         if token_value in NON_ZERO_DIGIT:
-                            if self.prev_token_type in ["IDENTIFIER", "SIGNEDINTEGER"]:
+                            if self.prev_token_type in ["id", "num"]:
                                 if self.minus_counter == 1:
-                                    self._add_to_table(accepted, "ARITHMATIC", "-")
+                                    self._add_to_table(accepted, "addsub", "-")
                                     self.minus_counter = 0
 
                                 elif self.minus_counter == 2:
-                                    self._add_to_table(accepted, "ARITHMATIC", "-")
+                                    self._add_to_table(accepted, "addsub", "-")
                                     token_value = "-" + token_value
                                     self.minus_counter = 0
                             else:
@@ -67,20 +68,20 @@ class LexicalAnalyzer:
                                     self.minus_counter -= 1
                                     token_value = "-" + token_value
                                 elif self.minus_counter == 2:
-                                    self._add_to_table(accepted, "ARITHMATIC", "-")
+                                    self._add_to_table(accepted, "addsub", "-")
                                     token_value = "-" + token_value
                                     self.minus_counter = 0
 
                         if token_value != "-":
                             for _ in range(self.minus_counter):
-                                self._add_to_table(accepted, "ARITHMATIC", "-")
+                                self._add_to_table(accepted, "addsub", "-")
                                 self.minus_counter -= 1
                             self._add_to_table(accepted, token_type, token_value)
                             self.prev_token_type = token_type
 
                         elif token_value == "-":
                             if self.minus_counter == 2:
-                                self._add_to_table(accepted, "ARITHMATIC", "-")
+                                self._add_to_table(accepted, "addsub", "-")
                             else:
                                 self.minus_counter += 1
                         # 성공적으로 토큰을 반환하면 모든 오토마타의 state를 초기화
@@ -105,3 +106,6 @@ class LexicalAnalyzer:
 
         self.output_file.write(str(self.table))
         self.output_file.close()
+        self.tokens.append("$")
+        
+        return self.tokens

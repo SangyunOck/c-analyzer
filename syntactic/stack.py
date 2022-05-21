@@ -9,4 +9,6 @@ class Stack:
         return self.stack[-1]
 
     def push(self, value):
+        if type(value) != int:
+            raise TypeError
         self.stack.append(value)
