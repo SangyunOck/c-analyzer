@@ -1,5 +1,7 @@
 int main() {
-    char a;
-    a = "1";
+    while(1 > 2) {
+        int c;
+        c = 2;
+    }
     return 0;
 }

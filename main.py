@@ -4,7 +4,7 @@ from lexical.lexical_analyzer import LexicalAnalyzer
 from syntactic.syntax_analyzer import SyntaxAnalyzer
 
 if __name__ == "__main__":
-    filename = "test.c"
+    filename = sys.argv[1]
     lexical_analyzer = LexicalAnalyzer(filename)
     input_string = lexical_analyzer.scan_lexemes()
     syntax_analyzer = SyntaxAnalyzer(input_string)

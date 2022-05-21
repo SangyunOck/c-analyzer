@@ -10,19 +10,21 @@ class SyntaxAnalyzer:
     stack = Stack()
     input_string = []
     slr_grammar: Dict[int, SLRGrammarData]
+    output_file = None
 
     def __init__(self, input_string):
         self.rules = get_rules()
         self.stack.push(0)
         self.input_string = input_string
         self.slr_grammar = get_slr_grammar()
+        self.output_file = open("test.out", "a")
 
     def parse_sytax(self):
         splitter_index = 0
         
         while True:
             current_state = self.stack.peek()
-            current_input_string = self.input_string[splitter_index]
+            current_input_string, current_input_value, line_num = self.input_string[splitter_index]
             command: str = self.rules[current_state][current_input_string]
 
             if command.startswith("s"):
@@ -41,8 +43,13 @@ class SyntaxAnalyzer:
                 self.stack.push(new_state)
 
             if command.startswith("acc"):
-                print("accepted")
+                self.output_file.write("\n\n")
+                self.output_file.write("accepted!")
                 break
 
             if command == ' ':
-                raise Exception
+                self.output_file.write("\n\n")
+                self.output_file.write(f'error at "{current_input_value}", line {line_num}')
+                break
+
+        self.output_file.close()

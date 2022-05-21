@@ -6,15 +6,25 @@
 |   lparen   |      (      |
 |   rparen   |      )      |
 |   lbrace   |      {      |
-|   vtype    |     char    |
-|     id     |      a      |
+|   while    |    while    |
+|   lparen   |      (      |
+|    num     |      1      |
+|    comp    |      >      |
+|    num     |      2      |
+|   rparen   |      )      |
+|   lbrace   |      {      |
+|   vtype    |     int     |
+|     id     |      c      |
 |    semi    |      ;      |
-|     id     |      a      |
+|     id     |      c      |
 |   assign   |      =      |
-|  literal   |     "1"     |
+|    num     |      2      |
 |    semi    |      ;      |
+|   rbrace   |      }      |
 |   return   |    return   |
 |    num     |      0      |
 |    semi    |      ;      |
 |   rbrace   |      }      |
 +------------+-------------+
+
+accepted!
