@@ -19,7 +19,7 @@ class SignedInteger(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1", "t3", "t4"]:
-                return TransitionState.COMPLETE, "SIGNEDINTEGER", self.value
+                return TransitionState.COMPLETE, "num", self.value
 
             else:
                 return TransitionState.FAIL, None, None

@@ -21,7 +21,7 @@ class IFKeyword(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t3", "t4"]:
-                return TransitionState.COMPLETE, "IFKEYWORD", self.value
+                return TransitionState.COMPLETE, "if", self.value
             else:
                 return TransitionState.FAIL, None, None
 
@@ -48,7 +48,7 @@ class ElSEKeyword(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t7", "t8"]:
-                return TransitionState.COMPLETE, "ELSEKEYWORD", self.value
+                return TransitionState.COMPLETE, "else", self.value
             else:
                 return TransitionState.FAIL, None, None
 
@@ -77,7 +77,7 @@ class WHILEKeyword(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t9", "t10"]:
-                return TransitionState.COMPLETE, "WHILEKEYWORD", self.value
+                return TransitionState.COMPLETE, "while", self.value
             else:
                 return TransitionState.FAIL, None, None
 
@@ -108,6 +108,6 @@ class RETURNKeyword(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t11", "t12"]:
-                return TransitionState.COMPLETE, "RETURNKEYWORD", self.value
+                return TransitionState.COMPLETE, "return", self.value
             else:
                 return TransitionState.FAIL, None, None

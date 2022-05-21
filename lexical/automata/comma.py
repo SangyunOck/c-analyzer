@@ -10,6 +10,6 @@ class Comma(DFA):
             return TransitionState.SUCCESS, None, None
         except KeyError:
             if self.state in ["t1"]:
-                return TransitionState.COMPLETE, "COMMA", self.value
+                return TransitionState.COMPLETE, "comma", self.value
             else:
                 return TransitionState.FAIL, None, None

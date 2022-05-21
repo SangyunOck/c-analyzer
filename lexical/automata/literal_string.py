@@ -31,6 +31,6 @@ class LiteralString(DFA):
             if self.state == "t1":
                 raise LexicalError('Need " to complete string', line_num)
             if self.state == "t2":
-                return TransitionState.COMPLETE, "LITERALSTRING", self.value
+                return TransitionState.COMPLETE, "literal", self.value
             else:
                 return TransitionState.FAIL, None, None
