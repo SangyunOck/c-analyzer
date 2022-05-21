@@ -12,7 +12,7 @@ class LexicalAnalyzer:
         self.table = PrettyTable(["Token name", "Token value"])
         self.minus_counter = 0
         self.prev_token_type = ""
-    
+
     # 테이블에 토큰을 추가하는 메소드
     def _add_to_table(self, accepted, token_type, token_value):
         if (
@@ -22,7 +22,7 @@ class LexicalAnalyzer:
         ):
             self.table.add_row([token_type, token_value])
             print(token_type, token_value)
-    
+
     # 한글짜씩 읽어 오토마타의 transition을 일으키는 메소드
     def scan_lexemes(self):
         grammar = Grammar()

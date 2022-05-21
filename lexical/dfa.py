@@ -23,8 +23,10 @@ class TransitionState(Enum):
     SUCCESS = 1
     COMPLETE = 3
 
+
 # 모든 오토마타의 Parent Class로, 오토마타의 behavior을 정의함
 # t_new = q(t_old, i)의 형태로 block되지 않으면 accept가 진행.
+
 
 class DFA:
     state = "t0"
@@ -48,6 +50,7 @@ class DFA:
 
     def unblock(self):
         self.is_blocked = False
+
 
 # lexical 에러가 발생하면 raise되는 exception클래스. 에러 메시지 + 라인번호의 형태
 class LexicalError(Exception):

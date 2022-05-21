@@ -1,4 +1,3 @@
-
 # 파일을 line-by-line으로 읽은 후 한 글자씩 뗴어서 반환하기 위한 클래스
 class LineBuffer:
     buffer = []

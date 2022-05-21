@@ -1,7 +1,4 @@
-from lexical.dfa import (
-    DFA,
-    TransitionState,
-)
+from lexical.dfa import DFA, TransitionState
 
 non_zero_digits = [str(i) for i in range(1, 10)]
 digits = non_zero_digits + [0]
