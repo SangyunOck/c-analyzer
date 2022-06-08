@@ -2485,9 +2485,10 @@ COND > FACTOR comp FACTOR
 RETURN > return FACTOR semi
 '''
 
+# 정의된 규칙을 dict형태로 반환
 def get_rules():
     rules = {}
-
+    
     for state, transition in states.items():
         for idx, t in enumerate(transition):
             state = int(state)
@@ -2498,6 +2499,7 @@ def get_rules():
 
     return rules
 
+# CFG를 파싱하여 reduce가 어떻게 진행되는지 반환
 def get_slr_grammar():
     slr_grammer = {}
 
